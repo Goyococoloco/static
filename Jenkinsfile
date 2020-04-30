@@ -2,9 +2,11 @@ pipeline {
   agent any
   stages {
     stage('Upload to AWS') {
-        withAWS(region:'us-west-2'){
-          s3Upload(file:'index.html', bucket:'jenkinspipelineproject3')
-        }
+      steps{  
+          withAWS(region:'us-west-2'){
+          sh 'echo "Uploading content with AWS creds"'
+            s3Upload(paythStyleAccessEnabled: true, payloadSigningEnabled: true, file:'index.html', bucket:'jenkinspipelineproject3')
+          }
       }
     }
   }
